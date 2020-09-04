@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,49 +31,61 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3OQ-hu-HCz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AI5-oy-1mV">
                                 <rect key="frame" x="0.0" y="93" width="414" height="720"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ssj-bm-fvt">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DrinksCollectionViewCell" id="9LC-R9-V54" customClass="DrinksCollectionViewCell" customModule="CocktailDB" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Utc-7w-X4l">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DrinkCategory" textLabel="iI9-Di-HNv" style="IBUITableViewCellStyleDefault" id="rfV-gt-K0w">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rfV-gt-K0w" id="5NT-xy-81G">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
-                                </cells>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iI9-Di-HNv">
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" red="0.49014008050000002" green="0.49022829530000001" blue="0.49013447760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DrinksTableViewCell" id="uOn-qw-gPo" customClass="DrinksTableViewCell" customModule="CocktailDB" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uOn-qw-gPo" id="gnz-GR-uac">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="0Na-VQ-mdx" id="8b7-qn-e21"/>
-                                    <outlet property="delegate" destination="0Na-VQ-mdx" id="8fH-HD-2vx"/>
+                                    <outlet property="dataSource" destination="0Na-VQ-mdx" id="Dge-nd-aGc"/>
+                                    <outlet property="delegate" destination="0Na-VQ-mdx" id="YgC-vk-1c2"/>
                                 </connections>
-                            </collectionView>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.80383342499999999" green="0.80397236350000001" blue="0.80382460359999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="aYW-9Y-ogE" firstAttribute="trailing" secondItem="3OQ-hu-HCz" secondAttribute="trailing" id="IP7-4d-vnJ"/>
-                            <constraint firstItem="3OQ-hu-HCz" firstAttribute="top" secondItem="aYW-9Y-ogE" secondAttribute="top" constant="5" id="ZOP-aX-063"/>
-                            <constraint firstItem="aYW-9Y-ogE" firstAttribute="bottom" secondItem="3OQ-hu-HCz" secondAttribute="bottom" id="bgZ-Zr-2VU"/>
-                            <constraint firstItem="3OQ-hu-HCz" firstAttribute="leading" secondItem="aYW-9Y-ogE" secondAttribute="leading" id="lNy-hz-wcb"/>
+                            <constraint firstItem="aYW-9Y-ogE" firstAttribute="bottom" secondItem="AI5-oy-1mV" secondAttribute="bottom" id="8ww-1d-KGK"/>
+                            <constraint firstItem="AI5-oy-1mV" firstAttribute="leading" secondItem="aYW-9Y-ogE" secondAttribute="leading" id="diP-Xc-feZ"/>
+                            <constraint firstItem="AI5-oy-1mV" firstAttribute="top" secondItem="aYW-9Y-ogE" secondAttribute="top" constant="5" id="qrq-Sx-9al"/>
+                            <constraint firstItem="aYW-9Y-ogE" firstAttribute="trailing" secondItem="AI5-oy-1mV" secondAttribute="trailing" id="yLP-fn-yhr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aYW-9Y-ogE"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Drinks" id="FN5-rH-KgR">
+                    <navigationItem key="navigationItem" id="FN5-rH-KgR">
                         <barButtonItem key="rightBarButtonItem" image="filter" id="FM1-li-jBQ">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="drinksCollectionView" destination="3OQ-hu-HCz" id="KIs-kz-a7C"/>
+                        <outlet property="drinksTableView" destination="AI5-oy-1mV" id="1o2-Uj-BcG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rof-Ly-CQM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

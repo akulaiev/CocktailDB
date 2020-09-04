@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireImage
 
 class CocktailDBAPIClient {
     
@@ -15,10 +16,12 @@ class CocktailDBAPIClient {
         static let baseString = "https://www.thecocktaildb.com/api/json/v1/1"
 
         case categories
+        case drinksForCategory
 
         var stringValue: String {
             switch self {
             case .categories: return Endpoints.baseString + "/list.php?c=list"
+            case .drinksForCategory: return Endpoints.baseString + "/filter.php?c="
             }
         }
 
@@ -38,5 +41,26 @@ class CocktailDBAPIClient {
         }
     }
     
+    class func getDrinkForCategory(category: String, completion: @escaping (CocktailDBResponse?, String?) -> Void) {
+        AF.request(Endpoints.drinksForCategory.stringValue + category).responseDecodable(of: CocktailDBResponse.self) {response in
+            if let error = response.error {
+                completion(nil, error.localizedDescription)
+            }
+            else {
+                completion(response.value, nil)
+            }
+        }
+    }
     
+    class func getDrinkImage(drinkUrl: String, completion: @escaping (UIImage?, String?) -> Void) {
+        let drinkPreviewUrl = drinkUrl + "/preview"
+        AF.request(drinkPreviewUrl).responseImage { response in
+            if case .success(let image) = response.result {
+                completion(image, nil)
+            }
+            else {
+                completion(nil, response.error?.localizedDescription)
+            }
+        }
+    }
 }

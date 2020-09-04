@@ -13,10 +13,10 @@
 		2DA3A3DA25025C5C008373B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A3D925025C5C008373B7 /* Assets.xcassets */; };
 		2DA3A3DD25025C5C008373B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A3DB25025C5C008373B7 /* LaunchScreen.storyboard */; };
 		2DA3A3EA25025E84008373B7 /* CocktailDBAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3A3E925025E84008373B7 /* CocktailDBAPIClient.swift */; };
-		2DA3A3F325026A08008373B7 /* DrinksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3A3F125026A08008373B7 /* DrinksCollectionViewCell.swift */; };
-		2DA3A3F425026A08008373B7 /* DrinksCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A3F225026A08008373B7 /* DrinksCollectionViewCell.xib */; };
 		2DA3A3F625027033008373B7 /* DrinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3A3F525027033008373B7 /* DrinksViewController.swift */; };
 		2DA3A3F825028659008373B7 /* CocktailDBResponseStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3A3F725028659008373B7 /* CocktailDBResponseStructs.swift */; };
+		2DA3A3FB2502C054008373B7 /* DrinksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA3A3F92502C054008373B7 /* DrinksTableViewCell.swift */; };
+		2DA3A3FC2502C054008373B7 /* DrinksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A3FA2502C054008373B7 /* DrinksTableViewCell.xib */; };
 		E01F381DAEAB0DD6FF939D33 /* libPods-CocktailDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E81E58238DF9B197F76078E /* libPods-CocktailDB.a */; };
 /* End PBXBuildFile section */
 
@@ -29,10 +29,10 @@
 		2DA3A3DC25025C5C008373B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2DA3A3DE25025C5C008373B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA3A3E925025E84008373B7 /* CocktailDBAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDBAPIClient.swift; sourceTree = "<group>"; };
-		2DA3A3F125026A08008373B7 /* DrinksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksCollectionViewCell.swift; sourceTree = "<group>"; };
-		2DA3A3F225026A08008373B7 /* DrinksCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrinksCollectionViewCell.xib; sourceTree = "<group>"; };
 		2DA3A3F525027033008373B7 /* DrinksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksViewController.swift; sourceTree = "<group>"; };
 		2DA3A3F725028659008373B7 /* CocktailDBResponseStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailDBResponseStructs.swift; sourceTree = "<group>"; };
+		2DA3A3F92502C054008373B7 /* DrinksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksTableViewCell.swift; sourceTree = "<group>"; };
+		2DA3A3FA2502C054008373B7 /* DrinksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrinksTableViewCell.xib; sourceTree = "<group>"; };
 		6CF712025D371809780725C8 /* Pods-CocktailDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocktailDB.debug.xcconfig"; path = "Target Support Files/Pods-CocktailDB/Pods-CocktailDB.debug.xcconfig"; sourceTree = "<group>"; };
 		6E81E58238DF9B197F76078E /* libPods-CocktailDB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CocktailDB.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD24E85E93BE4A928F48D14F /* Pods-CocktailDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CocktailDB.release.xcconfig"; path = "Target Support Files/Pods-CocktailDB/Pods-CocktailDB.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,8 +103,8 @@
 		2DA3A3E525025D68008373B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2DA3A3F125026A08008373B7 /* DrinksCollectionViewCell.swift */,
-				2DA3A3F225026A08008373B7 /* DrinksCollectionViewCell.xib */,
+				2DA3A3F92502C054008373B7 /* DrinksTableViewCell.swift */,
+				2DA3A3FA2502C054008373B7 /* DrinksTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -196,8 +196,8 @@
 			files = (
 				2DA3A3DD25025C5C008373B7 /* LaunchScreen.storyboard in Resources */,
 				2DA3A3DA25025C5C008373B7 /* Assets.xcassets in Resources */,
+				2DA3A3FC2502C054008373B7 /* DrinksTableViewCell.xib in Resources */,
 				2DA3A3D825025C5A008373B7 /* Main.storyboard in Resources */,
-				2DA3A3F425026A08008373B7 /* DrinksCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,9 +233,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DA3A3F325026A08008373B7 /* DrinksCollectionViewCell.swift in Sources */,
 				2DA3A3EA25025E84008373B7 /* CocktailDBAPIClient.swift in Sources */,
 				2DA3A3F625027033008373B7 /* DrinksViewController.swift in Sources */,
+				2DA3A3FB2502C054008373B7 /* DrinksTableViewCell.swift in Sources */,
 				2DA3A3D125025C5A008373B7 /* AppDelegate.swift in Sources */,
 				2DA3A3D325025C5A008373B7 /* SceneDelegate.swift in Sources */,
 				2DA3A3F825028659008373B7 /* CocktailDBResponseStructs.swift in Sources */,
