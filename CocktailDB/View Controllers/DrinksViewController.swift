@@ -10,9 +10,13 @@ import UIKit
 
 class DrinksViewController: UIViewController {
     
+    @IBOutlet weak var drinksCollectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        drinksCollectionView.delegate = self
+        drinksCollectionView.dataSource = self
+        drinksCollectionView.register(UINib.init(nibName: "DrinksCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "DrinksCollectionViewCell")
     }
 
 }
@@ -20,10 +24,13 @@ class DrinksViewController: UIViewController {
 extension DrinksViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DrinksCollectionViewCell", for: indexPath) as! DrinksCollectionViewCell
+        cell.cocktailName.text = "YoYoYo!!!"
+        cell.cocktailImg.image = UIImage(named: "filter")
+        return cell
     }
 }
