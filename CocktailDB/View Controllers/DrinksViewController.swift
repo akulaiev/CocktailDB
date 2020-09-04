@@ -62,6 +62,10 @@ extension DrinksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0, let categoryCell = tableView.dequeueReusableCell(withIdentifier: "DrinkCategory") {
+            categoryCell.textLabel?.text = drinkCategories[0]
+            return categoryCell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "DrinksTableViewCell", for: indexPath) as! DrinksTableViewCell
         cell.drinkName.text = drinksForCategories[currentCategotyNum]?.drinks[indexPath.row].strDrink
         CocktailDBAPIClient.getDrinkImage(drinkUrl: (drinksForCategories[currentCategotyNum]?.drinks[indexPath.row].strDrinkThumb)!) { image, error in
