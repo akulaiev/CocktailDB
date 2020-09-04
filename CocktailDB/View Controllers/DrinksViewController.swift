@@ -11,12 +11,23 @@ import UIKit
 class DrinksViewController: UIViewController {
     
     @IBOutlet weak var drinksCollectionView: UICollectionView!
+    var drinkCategories: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         drinksCollectionView.delegate = self
         drinksCollectionView.dataSource = self
         drinksCollectionView.register(UINib.init(nibName: "DrinksCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "DrinksCollectionViewCell")
+        CocktailDBAPIClient.getCategotiesList() { response, error in
+            guard let response = response else {
+                print(error ?? "An error has occured")
+                return
+            }
+            for category in response.drinks {
+                self.drinkCategories.append(category.strCategory)
+            }
+            print(response.drinks.count)
+        }
     }
 
 }
