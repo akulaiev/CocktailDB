@@ -24,24 +24,30 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXr-5h-nv2">
-                        <rect key="frame" x="115" y="10.5" width="190" height="21"/>
+                        <rect key="frame" x="115" y="10.5" width="190" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.49014008050000002" green="0.49022829530000001" blue="0.49013447760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6YV-7G-Vtc">
+                        <rect key="frame" x="40" y="10.5" width="20" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Lap-Xl-xoi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DCa-ZG-9gc"/>
                     <constraint firstItem="Lap-Xl-xoi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Kk2-2r-DiO"/>
+                    <constraint firstItem="6YV-7G-Vtc" firstAttribute="centerX" secondItem="Lap-Xl-xoi" secondAttribute="centerX" id="QPT-BH-siI"/>
                     <constraint firstAttribute="bottom" secondItem="Lap-Xl-xoi" secondAttribute="bottom" id="ZX3-th-AQQ"/>
                     <constraint firstAttribute="trailing" secondItem="GXr-5h-nv2" secondAttribute="trailing" constant="15" id="Zxg-Wx-JpY"/>
                     <constraint firstItem="GXr-5h-nv2" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.5" id="gMa-SE-Oek"/>
+                    <constraint firstItem="6YV-7G-Vtc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gvU-zk-upQ"/>
                     <constraint firstItem="GXr-5h-nv2" firstAttribute="leading" secondItem="Lap-Xl-xoi" secondAttribute="trailing" constant="15" id="hhM-50-tBU"/>
                     <constraint firstItem="GXr-5h-nv2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vTx-TL-61F"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityIndicator" destination="6YV-7G-Vtc" id="8tB-Gg-p57"/>
                 <outlet property="drinkImage" destination="Lap-Xl-xoi" id="Kqm-mQ-mk3"/>
                 <outlet property="drinkName" destination="GXr-5h-nv2" id="jAc-Zd-B0b"/>
             </connections>

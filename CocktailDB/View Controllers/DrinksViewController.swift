@@ -9,12 +9,9 @@
 import UIKit
 
 class DrinksViewController: UIViewController {
-    
 
     @IBOutlet weak var drinksTableView: UITableView!
-    var drinkCategories: [String] = []
-    var currentCategotyNum: Int = 0
-    var drinksForCategories: [CocktailDBResponse?] = []
+    var model: CocktailsDataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,53 +26,39 @@ class DrinksViewController: UIViewController {
         drinksTableView.dataSource = self
         drinksTableView.register(UINib.init(nibName: "DrinksTableViewCell", bundle: nil), forCellReuseIdentifier: "DrinksTableViewCell")
         
-        CocktailDBAPIClient.getCategotiesList() { response, error in
-            guard let response = response else {
-                print(error ?? "An error has occured")
-                return
-            }
-            for category in response.drinks {
-                self.drinkCategories.append(category.strCategory)
-            }
-            CocktailDBAPIClient.getDrinkForCategory(category: self.drinkCategories[0].replacingOccurrences(of: " ", with: "_")) { response, error in
-                DispatchQueue.main.async {
-                    guard let response = response else {
-                           print(error ?? "An error has occured")
-                           return
-                       }
-                    self.drinksForCategories.append(response)
-                    self.drinksTableView.reloadData()
-                }
-            }
-        }
+        model = CocktailsDataModel(delegate: self)
+        model.fetchCategories()
     }
 
 }
 
-extension DrinksViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if drinksForCategories.count > 0 {
-            guard let drinks = drinksForCategories[currentCategotyNum] else {return 0}
-            return drinks.drinks.count
+extension DrinksViewController: CocktailsViewModelDelegate {
+    
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?, target: String) {
+        print("fetch success")
+        if target == "categories" {
+            model.fetchDrinksData(tableView: drinksTableView)
         }
-        return 0
+        drinksTableView.reloadData()
+    }
+    
+    func onFetchFailed(with reason: String) {
+        print(reason)
+    }
+    
+    
+}
+
+extension DrinksViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let drinks = model.drinksForCategories else {return 0}
+        return drinks.drinks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0, let categoryCell = tableView.dequeueReusableCell(withIdentifier: "DrinkCategory") {
-            categoryCell.textLabel?.text = drinkCategories[0]
-            return categoryCell
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "DrinksTableViewCell", for: indexPath) as! DrinksTableViewCell
-        cell.drinkName.text = drinksForCategories[currentCategotyNum]?.drinks[indexPath.row].strDrink
-        CocktailDBAPIClient.getDrinkImage(drinkUrl: (drinksForCategories[currentCategotyNum]?.drinks[indexPath.row].strDrinkThumb)!) { image, error in
-            DispatchQueue.main.async {
-                if let image = image {
-                    cell.drinkImage.image = image
-                }
-            }
-        }
-        cell.drinkImage.image = UIImage(named: "filter")
+        cell.drinkName.text = model.drinksForCategories?.drinks[indexPath.row].strDrink
         return cell
     }
 }
