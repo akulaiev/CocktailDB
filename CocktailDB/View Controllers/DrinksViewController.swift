@@ -34,6 +34,11 @@ class DrinksViewController: UIViewController {
         model.fetchCategories()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        print(chosenFilters)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toFilter" {
             let destination = segue.destination as! FilterViewController

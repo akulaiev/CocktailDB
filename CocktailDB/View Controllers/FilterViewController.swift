@@ -16,6 +16,7 @@ class FilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        chosenFilters = allFilters
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,7 +34,6 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = filterTableView.dequeueReusableCell(withIdentifier: "filterCell")!
-        cell.accessoryType = .none
         cell.textLabel?.text = allFilters[indexPath.row]
         cell.textLabel?.textColor = UIColor(red: 0.557, green: 0.557, blue: 0.557, alpha: 1)
         return cell
