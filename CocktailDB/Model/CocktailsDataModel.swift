@@ -9,23 +9,38 @@
 import Foundation
 import UIKit
 
-protocol CocktailsViewModelDelegate: class {
+    protocol CocktailsViewModelDelegate: class {
     
-    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
+        func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
         func onFetchFailed(with reason: String)
+    }
+
+    class Objects {
+        var sectionName : String!
+        var sectionObjects : [Drink]!
+        
+        init(sectionName: String, sectionObjects: [Drink]) {
+            self.sectionName = sectionName
+            self.sectionObjects = sectionObjects
+        }
     }
 
     class CocktailsDataModel {
         
-        struct Objects {
-            var sectionName : String!
-            var sectionObjects : [Drink]!
+        struct CategoryTotal {
+            var name: String
+            var totalCount: Int
+            
+            init(name: String, totalCount: Int) {
+                self.name = name
+                self.totalCount = totalCount
+            }
         }
         
         var delegate: CocktailsViewModelDelegate?
         var drinkCategories: [String] = []
-        var catrgoriesTotal: [String : Int] = [:]
-        var drinksForCategories: [Objects] = []
+        var catrgoriesTotal: [CategoryTotal] = []
+        var drinksForCategories = [Objects]()
         var currentCategoryNum: Int = 0
         var isFetchInProgress = false
         
@@ -36,7 +51,7 @@ protocol CocktailsViewModelDelegate: class {
         }
         
         func fetchCategories() {
-        let categoryCounts = [100, 100, 17, 34, 9, 51, 25, 12, 40, 13, 11]
+        var categoryCounts = [100, 100, 17, 34, 9, 51, 25, 12, 40, 13, 11]
         CocktailDBAPIClient.getCategotiesList() { response, error in
             guard let response = response else {
                 self.delegate?.onFetchFailed(with: error ?? "An error has occured")
@@ -44,12 +59,15 @@ protocol CocktailsViewModelDelegate: class {
             }
             for category in response.drinks {
                 self.drinkCategories.append(category.strCategory)
+                self.catrgoriesTotal.append(CategoryTotal(name: category.strCategory, totalCount: categoryCounts[0]))
+                categoryCounts.remove(at: 0)
             }
             self.fetchDrinksData()
         }
     }
     
     func fetchDrinksData() {
+        
         guard !isFetchInProgress else {return}
         isFetchInProgress = true
         if filters.count == 0 {
@@ -62,12 +80,7 @@ protocol CocktailsViewModelDelegate: class {
                     self.delegate?.onFetchFailed(with: error ?? "An error has occured")
                     return
                 }
-                
-                let names = [self.filters[self.currentCategoryNum] : response.drinks]
-                for (key, value) in names {
-                    self.drinksForCategories.append(Objects(sectionName: key, sectionObjects: value))
-                }
-
+                self.drinksForCategories.append(Objects(sectionName: self.filters[self.currentCategoryNum], sectionObjects: response.drinks))
                 if self.currentCategoryNum > 0 {
                     let indexPathsToReload = self.calculateIndexPathsToReload(from: response.drinks)
                     self.delegate?.onFetchCompleted(with: indexPathsToReload)

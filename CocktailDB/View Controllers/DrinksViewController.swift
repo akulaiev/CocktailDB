@@ -36,7 +36,6 @@ class DrinksViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print(chosenFilters)
         model.filters = chosenFilters
     }
     
@@ -44,6 +43,7 @@ class DrinksViewController: UIViewController {
         if segue.identifier == "toFilter" {
             let destination = segue.destination as! FilterViewController
             destination.allFilters = model.drinkCategories
+            destination.chosenFilters = model.filters
         }
     }
 }
@@ -62,22 +62,35 @@ extension DrinksViewController: CocktailsViewModelDelegate {
     func onFetchFailed(with reason: String) {
         HelperMethods.showFailureAlert(title: "Warning", message: reason, controller: self)
     }
-    
 }
 
 extension DrinksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return model.drinkCategories.count
+        if chosenFilters.count == 0 {
+            return model.drinkCategories.count
+        }
+        return chosenFilters.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.catrgoriesTotal[section]
+        if chosenFilters.count == 0 {
+            return model.catrgoriesTotal[section].totalCount
+        }
+        for categoryTotal in model.catrgoriesTotal {
+            if categoryTotal.name == chosenFilters[section] {
+                return categoryTotal.totalCount
+            }
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if model.drinkCategories.count > 0 {
+        if model.drinkCategories.count > 0 && chosenFilters.count == 0 {
             return model.drinkCategories[section]
+        }
+        else if chosenFilters.count > 0 {
+            return chosenFilters[section]
         }
         return nil
     }
