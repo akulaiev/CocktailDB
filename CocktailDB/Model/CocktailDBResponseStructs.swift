@@ -17,11 +17,17 @@ struct Category: Codable {
 }
 
 struct CocktailDBResponse: Codable {
-    let drinks: [Drink]
+    var drinks: [Drink]
 }
 
 struct Drink: Codable {
     let strDrink: String
     let strDrinkThumb: String
     let idDrink: String
+    
+    init(strDrink: String, idDrink: String) {
+        self.strDrink = strDrink
+        self.strDrinkThumb = ""
+        self.idDrink = idDrink
+    }
 }

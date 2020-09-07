@@ -23,4 +23,28 @@ class DrinksTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    func configure(drinkInfo: Drink?, targetVC: UIViewController) {
+        if let drinkInfo = drinkInfo {
+            drinkName.text = drinkInfo.strDrink
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            CocktailDBAPIClient.getDrinkImage(drinkUrl: drinkInfo.strDrinkThumb) { image, error in
+                DispatchQueue.main.async {
+                    guard let image = image else {
+                        HelperMethods.showFailureAlert(title: "Warning", message: error ?? "An error has ocured", controller: targetVC)
+                            return
+                    }
+                    self.drinkImage.image = image
+                }
+            }
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+        }
+        else {
+            drinkName.text = ""
+            drinkImage.image = nil
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+        }
+    }
 }
