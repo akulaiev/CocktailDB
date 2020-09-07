@@ -12,23 +12,31 @@ import UIKit
 protocol CocktailsViewModelDelegate: class {
     
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
-    func onFetchFailed(with reason: String)
-}
-
-class CocktailsDataModel {
-    
-    var delegate: CocktailsViewModelDelegate?
-    var drinkCategories: [String] = []
-    var drinksForCategories: [Drink] = []
-    var currentCategoryNum: Int = 0
-    var isFetchInProgress = false
-    var total: Int = 0
-    
-    init(delegate: CocktailsViewModelDelegate) {
-        self.delegate = delegate
+        func onFetchFailed(with reason: String)
     }
-    
-    func fetchCategories() {
+
+    class CocktailsDataModel {
+        
+        struct Objects {
+            var sectionName : String!
+            var sectionObjects : [Drink]!
+        }
+        
+        var delegate: CocktailsViewModelDelegate?
+        var drinkCategories: [String] = []
+        var catrgoriesTotal: [String : Int] = [:]
+        var drinksForCategories: [Objects] = []
+        var currentCategoryNum: Int = 0
+        var isFetchInProgress = false
+        
+        var filters: [String] = []
+        
+        init(delegate: CocktailsViewModelDelegate) {
+            self.delegate = delegate
+        }
+        
+        func fetchCategories() {
+        let categoryCounts = [100, 100, 17, 34, 9, 51, 25, 12, 40, 13, 11]
         CocktailDBAPIClient.getCategotiesList() { response, error in
             guard let response = response else {
                 self.delegate?.onFetchFailed(with: error ?? "An error has occured")
@@ -44,16 +52,22 @@ class CocktailsDataModel {
     func fetchDrinksData() {
         guard !isFetchInProgress else {return}
         isFetchInProgress = true
-        CocktailDBAPIClient.getDrinkForCategory(category: self.drinkCategories[currentCategoryNum].replacingOccurrences(of: " ", with: "_")) { response, error in
+        if filters.count == 0 {
+            filters = drinkCategories
+        }
+        CocktailDBAPIClient.getDrinkForCategory(category: self.filters[currentCategoryNum].replacingOccurrences(of: " ", with: "_")) { response, error in
                 DispatchQueue.main.async {
                 self.isFetchInProgress = false
                 guard let response = response else {
                     self.delegate?.onFetchFailed(with: error ?? "An error has occured")
                     return
                 }
-                self.total = 604 + self.drinkCategories.count
-                self.drinksForCategories.append(Drink(strDrink: self.drinkCategories[self.currentCategoryNum], idDrink: "category"))
-                self.drinksForCategories.append(contentsOf: response.drinks)
+                
+                let names = [self.filters[self.currentCategoryNum] : response.drinks]
+                for (key, value) in names {
+                    self.drinksForCategories.append(Objects(sectionName: key, sectionObjects: value))
+                }
+
                 if self.currentCategoryNum > 0 {
                     let indexPathsToReload = self.calculateIndexPathsToReload(from: response.drinks)
                     self.delegate?.onFetchCompleted(with: indexPathsToReload)
@@ -69,11 +83,11 @@ class CocktailsDataModel {
     }
     
     func calculateIndexPathsToReload(from newDrinks: [Drink]) -> [IndexPath] {
-        let startIndex = drinksForCategories.count - newDrinks.count
+        let startIndex = drinksForCategories[currentCategoryNum].sectionObjects.count - newDrinks.count
         let endIndex = startIndex + newDrinks.count
         var indexPaths: [IndexPath] = []
         for i in startIndex..<endIndex {
-            indexPaths.append(IndexPath(row: i, section: 0))
+            indexPaths.append(IndexPath(row: i, section: currentCategoryNum))
         }
         return indexPaths
     }

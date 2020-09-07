@@ -37,6 +37,7 @@ class DrinksViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print(chosenFilters)
+        model.filters = chosenFilters
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,24 +67,28 @@ extension DrinksViewController: CocktailsViewModelDelegate {
 
 extension DrinksViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return model.drinkCategories.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.total
+        return model.catrgoriesTotal[section]
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if model.drinkCategories.count > 0 {
+            return model.drinkCategories[section]
+        }
+        return nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if model.drinksForCategories[indexPath.row].idDrink == "category" {
-            let cell = drinksTableView.dequeueReusableCell(withIdentifier: "DrinkCategory")!
-            cell.textLabel?.text = model.drinksForCategories[indexPath.row].strDrink
-            cell.textLabel?.textColor = UIColor(red: 0.557, green: 0.557, blue: 0.557, alpha: 1)
-            return cell
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "DrinksTableViewCell", for: indexPath) as! DrinksTableViewCell
-        cell.configure(drinkInfo: model.drinksForCategories[indexPath.row], targetVC: self)
         if isLoadingCell(for: indexPath) {
             cell.configure(drinkInfo: nil, targetVC: self)
         }
         else {
-            cell.configure(drinkInfo: model.drinksForCategories[indexPath.row], targetVC: self)
+            cell.configure(drinkInfo: model.drinksForCategories[indexPath.section].sectionObjects[indexPath.row], targetVC: self)
         }
         return cell
     }
@@ -101,7 +106,10 @@ extension DrinksViewController: UITableViewDataSourcePrefetching {
 private extension DrinksViewController {
     
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= model.drinksForCategories.count
+        if indexPath.section >= model.drinksForCategories.count {
+            return true
+        }
+        return indexPath.row >= model.drinksForCategories[indexPath.section].sectionObjects.count
     }
 
     func visibleIndexPathsToReload(indexPaths: [IndexPath]) -> [IndexPath] {

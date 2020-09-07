@@ -35,10 +35,10 @@ class DrinksTableViewCell: UITableViewCell {
                             return
                     }
                     self.drinkImage.image = image
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
                 }
             }
-            activityIndicator.stopAnimating()
-            activityIndicator.isHidden = true
         }
         else {
             drinkName.text = ""
